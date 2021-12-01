@@ -8,5 +8,5 @@ const findDepDir = require('../src/utils/find-dep-dir')
 console.log('husky')
 console.log('uninstalling Git hooks')
 
-const depDir = findDepDir()
+const depDir = findDepDir(path.join(__dirname, '..'))
 uninstallFrom(depDir)

@@ -7,13 +7,17 @@ const rimraf = require('rimraf')
 const tempy = require('tempy')
 const installFrom = require('../src/install')
 const uninstallFrom = require('../src/uninstall')
+const findDepDir = require('../src/utils/find-dep-dir')
 
 function install(rootDir, dir) {
-  installFrom(path.join(rootDir, dir))
+  const depDir = findDepDir(path.join(rootDir, dir))
+  console.log('=====================', depDir)
+  installFrom(depDir)
 }
 
 function uninstall(rootDir, dir) {
-  uninstallFrom(path.join(rootDir, dir))
+  const depDir = findDepDir(path.join(rootDir, dir))
+  uninstallFrom(depDir)
 }
 
 function mkdir(rootDir, dir) {
@@ -167,5 +171,24 @@ describe('yorkie', () => {
     const hook = readFile(dir, '.git/hooks/pre-commit')
     expect(hook).toMatch('yorkie')
     expect(hook).not.toMatch('./node_modules/pre-commit/hook')
+  })
+
+  it('should support installing from pnpm', () => {
+    mkdir(dir, '.git/hooks')
+    mkdir(dir, 'node_modules/.pnpm/registry.npmmirror.com+yorkie@2.0.0/node_modules/yorkie')
+    writeFile(dir, 'package.json', '{}')
+
+    install(dir, 'node_modules/.pnpm/registry.npmmirror.com+yorkie@2.0.0/node_modules/yorkie')
+    const hook = readFile(dir, '.git/hooks/pre-commit')
+
+    expect(hook).toMatch('#yorkie')
+    expect(hook).toMatch('cd "."')
+    expect(hook).toMatch('--no-verify')
+
+    const prepareCommitMsg = readFile(dir, '.git/hooks/prepare-commit-msg')
+    expect(prepareCommitMsg).toMatch('cannot be bypassed')
+
+    uninstall(dir, 'node_modules/.pnpm/registry.npmmirror.com+yorkie@2.0.0/node_modules/yorkie')
+    expect(exists(dir, '.git/hooks/pre-push')).toBeFalsy()
   })
 })

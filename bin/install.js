@@ -21,5 +21,5 @@ if (process.env.HUSKY_SKIP_INSTALL || process.env.YORKIE_SKIP_INSTALL) {
 
 console.log('setting up Git hooks')
 
-const depDir = findDepDir()
+const depDir = findDepDir(path.join(__dirname, '..'))
 installFrom(depDir)
