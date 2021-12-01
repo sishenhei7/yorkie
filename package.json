@@ -1,7 +1,7 @@
 {
-  "name": "yorkie",
+  "name": "yorkie-pnpm",
   "version": "2.0.0",
-  "description": "githooks management forked from husky",
+  "description": "githooks management forked from yorkie",
   "engines": {
     "node": ">=4"
   },
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/yyx990803/yorkie.git"
+    "url": "git://github.com/sishenhei7/yorkie-pnpm.git"
   },
   "keywords": [
     "git",
@@ -31,13 +31,14 @@
   ],
   "authors": [
     "Typicode <typicode@gmail.com>",
-    "Evan You"
+    "Evan You",
+    "sishenhei7"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/yyx990803/yorkie/issues"
+    "url": "https://github.com/sishenhei7/yorkie-pnpm/issues"
   },
-  "homepage": "https://github.com/yyx990803/yorkie",
+  "homepage": "https://github.com/sishenhei7/yorkie-pnpm",
   "devDependencies": {
     "jest": "^20.0.4",
     "mkdirp": "^0.5.1",

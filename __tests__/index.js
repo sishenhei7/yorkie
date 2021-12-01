@@ -11,7 +11,6 @@ const findDepDir = require('../src/utils/find-dep-dir')
 
 function install(rootDir, dir) {
   const depDir = findDepDir(path.join(rootDir, dir))
-  console.log('=====================', depDir)
   installFrom(depDir)
 }
 
